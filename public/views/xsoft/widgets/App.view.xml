@@ -1,5 +1,18 @@
-<mvc:View
+<!--<mvc:View
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc">
     <Text text="Hello World from xml view" />
+</mvc:View>-->
+<mvc:View
+    controllerName="xsoft.views.App"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Button
+        text="Say Hello"
+        press="onShowHello" />
+    <Input
+        value="{/recipient/name}"
+        description="Hello {/recipient/name}"
+        valueLiveUpdate="true"
+        width="60%" />
 </mvc:View>
