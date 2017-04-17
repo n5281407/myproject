@@ -6,8 +6,9 @@ app.set('port', process.env.PORT || 8088);
 app.use(express.static(__dirname+'/public'));
 
 app.get('/', function(req, res){
-    res.type('text/plain');
-    res.send('Hello there and welcome');
+    // res.type('text/plain');
+    // res.send('Hello there and welcome');
+    res.redirect(303, 'index.html');
 });
 
 app.get('/about', function(req, res){

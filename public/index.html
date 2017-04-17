@@ -8,11 +8,20 @@
                 data-sap-ui-theme='sap_belize'
                 data-sap-ui-libs='sap.m'
                 data-sap-ui-compatVersion='edge'
+                data-sap-ui-resourceroots='{
+                    "xsoft.views":"views/xsoft/widgets/"
+                }'
                 data-sap-ui-preload='async'>
         </script>
         <script>
             sap.ui.getCore().attachInit(function(){
-                jQuery("#content").html("Hello World - UI5 is ready");
+                // jQuery("#content").html("Hello World - UI5 is ready");
+                // new sap.m.Text({
+                //     text: "Hello World"
+                // }).placeAt("content");
+                new sap.ui.xmlview({
+                    viewName: "xsoft.views.App"
+                }).placeAt("content");
             });
         </script>
     </head>
