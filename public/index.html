@@ -15,6 +15,9 @@
                 data-sap-ui-preload='async'>
         </script>
         <script>
+            jQuery.sap.registerModulePath("xsoft.service", "service/");
+        </script>
+        <script>
             sap.ui.getCore().attachInit(function(){
                 // jQuery("#content").html("Hello World - UI5 is ready");
                 // new sap.m.Text({

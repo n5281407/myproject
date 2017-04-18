@@ -3,12 +3,16 @@ sap.ui.define([
 		'sap/m/MessageToast',
 		'sap/ui/core/Fragment',
 		'sap/ui/core/mvc/Controller',
-		'sap/ui/model/json/JSONModel'
-	], function(jQuery, MessageToast, Fragment, Controller, JSONModel) {
+		'sap/ui/model/json/JSONModel',
+        'xsoft/service/ServiceProxy'
+	], function(jQuery, MessageToast, Fragment, Controller, JSONModel, ServiceProxy) {
 	"use strict";
  
 	var ControllerController = Controller.extend("xsoft.views.Shell", {
 		onInit: function() {
+            //test code below
+            var serviceProxy = new xsoft.service.ServiceProxy();
+            //test code up
 			var oData = {
                 logo: jQuery.sap.getModulePath("sap.ui.core", '/') + "mimes/logo/sap_50x26.png",
                 TileCollection: [
