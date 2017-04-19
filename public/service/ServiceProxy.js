@@ -1,15 +1,17 @@
 jQuery.sap.declare("xsoft.service.ServiceProxy");
+jQuery.sap.require("xsoft.service.Services");
 
 (function () {
 
-    var serviceDefinitions = [
-        {
-            service: "xsoft.service.getAllProducts",
-            url: "/api/products",
-            action: "GET",
-            expect: "json"
-        }
-    ];
+    // var serviceDefinitions = [
+    //     {
+    //         service: "xsoft.service.getAllProducts",
+    //         url: "/api/products",
+    //         action: "GET",
+    //         expect: "json"
+    //     }
+    // ];
+    var serviceDefinitions = xsoft.service.Services;
     var _contentTypes = {
         xml: "application/xml",
         json: "application/json",

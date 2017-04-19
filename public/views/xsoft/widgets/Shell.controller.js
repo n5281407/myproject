@@ -88,6 +88,12 @@ sap.ui.define([
             // set reference to shell and open overlay
             this._overlay.setShell(this.getView().byId("myShell"));
             this._overlay.open();
+        },
+
+        onTilePress: function(event){
+            // alert("me click");
+            var container = sap.ui.getCore().byId("container");
+             this.oView.removeContent(container);
         }
     });
 
