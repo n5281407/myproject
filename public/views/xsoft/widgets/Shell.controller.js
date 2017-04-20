@@ -1,15 +1,19 @@
 sap.ui.define([
     'jquery.sap.global',
     'sap/m/MessageToast',
+    'sap/m/TileContainer',
+    'sap/m/StandardTile',
     'sap/ui/core/Fragment',
     'sap/ui/core/mvc/Controller',
     'sap/ui/model/json/JSONModel',
     'xsoft/service/ServiceProxy'
-], function (jQuery, MessageToast, Fragment, Controller, JSONModel, ServiceProxy) {
+], function (jQuery, MessageToast, TileContainer, StandardTile, Fragment, Controller, JSONModel, ServiceProxy) {
     "use strict";
 
     var ControllerController = Controller.extend("xsoft.views.Shell", {
         onInit: function () {
+            this.properties = {};
+            var that = this;
             //test code below
             var products = [];
             xsoft.service.ServiceProxy.registerServices();
@@ -22,11 +26,30 @@ sap.ui.define([
             //test code up
             var oData = {
                 logo: jQuery.sap.getModulePath("sap.ui.core", '/') + "mimes/logo/sap_50x26.png",
-                TileCollection: products
+                // TileCollection: products
             };
             var oModel = new JSONModel();
             oModel.setData(oData);
             this.getView().setModel(oModel);
+            var tileContainer = new TileContainer();
+            this.properties.tileContainer = tileContainer;
+            this.properties.products = products;
+            for(var i = 0; i < products.length; i++){
+                var tile = new StandardTile({
+                    icon: products[i].icon,
+                    type: products[i].type,
+                    number: products[i].number,
+                    numberUnit: products[i].numberUnit,
+                    title: products[i].title,
+                    info: products[i].info,
+                    infoState: products[i].infoState,
+                });
+                tile.attachPress(jQuery.proxy(that.onTilePress, that, i));
+                tileContainer.addTile(tile);
+            }
+            var app = this.getView().byId("myApp");
+            app.addPage(tileContainer);
+            this.properties.app = app;
         },
 
         handlePressConfiguration: function (oEvent) {
@@ -90,10 +113,9 @@ sap.ui.define([
             this._overlay.open();
         },
 
-        onTilePress: function(event){
-            // alert("me click");
-            var container = sap.ui.getCore().byId("container");
-             this.oView.removeContent(container);
+        onTilePress: function(index){
+            alert("me click " + index);
+            // this.properties.app.removePage(this.properties.tileContainer);
         }
     });
 

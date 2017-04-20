@@ -39,7 +39,7 @@
 				<Text text="Lorem ipsum" />
 			</u:paneContent>
             <u:content>
-                <TileContainer
+                <!--<TileContainer
                     id="container"
                     tileDelete="handleTileDelete"
                     tiles="{/TileCollection}">
@@ -52,7 +52,10 @@
                         info="{info}"
                         infoState="{infoState}" 
 						press="onTilePress"/>
-                </TileContainer>
+                </TileContainer>-->
+				<App
+					id="myApp">
+				</App>
             </u:content>          
 		</u:Shell>
 </mvc:View>
