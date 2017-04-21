@@ -1,0 +1,12 @@
+<mvc:View
+	controllerName="xsoft.views.pages.Showroom"
+	xmlns:l="sap.ui.layout"
+	xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	class="viewPadding">    
+	<TileContainer
+		id = "-tileContainer">
+
+	</TileContainer>
+</mvc:View>

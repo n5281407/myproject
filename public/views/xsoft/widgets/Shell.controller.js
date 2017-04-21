@@ -10,19 +10,21 @@ sap.ui.define([
 ], function (jQuery, MessageToast, TileContainer, StandardTile, Fragment, Controller, JSONModel, ServiceProxy) {
     "use strict";
 
+    var _app;
+    var _currentPage;
     var ControllerController = Controller.extend("xsoft.views.Shell", {
         onInit: function () {
             this.properties = {};
             var that = this;
             //test code below
-            var products = [];
+            // var products = [];
             xsoft.service.ServiceProxy.registerServices();
-            var proxy = new xsoft.service.ServiceProxy("xsoft.service.getAllProducts", true);
-            proxy.execute({
-                succeeded: function (data) {
-                    products = JSON.parse(data);
-                }
-            });
+            // var proxy = new xsoft.service.ServiceProxy("xsoft.service.getAllProducts", true);
+            // proxy.execute({
+            //     succeeded: function (data) {
+            //         products = JSON.parse(data);
+            //     }
+            // });
             //test code up
             var oData = {
                 logo: jQuery.sap.getModulePath("sap.ui.core", '/') + "mimes/logo/sap_50x26.png",
@@ -33,23 +35,28 @@ sap.ui.define([
             this.getView().setModel(oModel);
             var tileContainer = new TileContainer();
             this.properties.tileContainer = tileContainer;
-            this.properties.products = products;
-            for(var i = 0; i < products.length; i++){
-                var tile = new StandardTile({
-                    icon: products[i].icon,
-                    type: products[i].type,
-                    number: products[i].number,
-                    numberUnit: products[i].numberUnit,
-                    title: products[i].title,
-                    info: products[i].info,
-                    infoState: products[i].infoState,
-                });
-                tile.attachPress(jQuery.proxy(that.onTilePress, that, i));
-                tileContainer.addTile(tile);
-            }
+            // this.properties.products = products;
+            // for(var i = 0; i < products.length; i++){
+            //     var tile = new StandardTile({
+            //         icon: products[i].icon,
+            //         type: products[i].type,
+            //         number: products[i].number,
+            //         numberUnit: products[i].numberUnit,
+            //         title: products[i].title,
+            //         info: products[i].info,
+            //         infoState: products[i].infoState,
+            //     });
+            //     tile.attachPress(jQuery.proxy(that.onTilePress, that, i));
+            //     tileContainer.addTile(tile);
+            // }
+            var showroom = sap.ui.view({id:"showroom",
+                viewName:"xsoft.views.pages.Showroom",
+                type:sap.ui.core.mvc.ViewType.XML});            
             var app = this.getView().byId("myApp");
-            app.addPage(tileContainer);
-            this.properties.app = app;
+            // app.addPage(tileContainer);
+            app.addPage(showroom);
+            _currentPage = showroom;
+            _app = app;
         },
 
         handlePressConfiguration: function (oEvent) {
@@ -116,8 +123,14 @@ sap.ui.define([
         onTilePress: function(index){
             alert("me click " + index);
             // this.properties.app.removePage(this.properties.tileContainer);
-        }
+        },
     });
+
+    xsoft.views.Shell.navTo = function(oPage){
+        _app.removePage(_currentPage);
+        _app.addPage(oPage);
+        _currentPage = oPage;
+    }    
 
     return ControllerController;
 

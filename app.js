@@ -17,6 +17,12 @@ app.get('/api/products', function (req, res) {
     res.json(data);
 });
 
+app.get('/api/product/:pid', function(req, res){
+    var pid = req.params.pid;
+    var data = pm.getProduct(pid);
+    res.json(data);
+});
+
 app.get('/about', function (req, res) {
     res.type('text/plain');
     res.send('My name is Kun');

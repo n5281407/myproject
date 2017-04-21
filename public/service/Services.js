@@ -6,5 +6,11 @@ xsoft.service.Services = [
         url: "/api/products",
         action: "GET",
         expect: "json"
-    }
+    },
+    {
+        service: "xsoft.service.getProduct",
+        url: "/api/product/{pid}",
+        action: "GET",
+        expect: "json"
+    }    
 ];

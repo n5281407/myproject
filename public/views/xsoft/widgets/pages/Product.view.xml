@@ -1,0 +1,69 @@
+<mvc:View
+	controllerName="xsoft.views.pages.Product"
+	xmlns:l="sap.ui.layout"
+	xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	class="viewPadding">    
+	<Page
+		id="page"
+		title="{Name}"
+		showNavButton="{device>/isPhone}"
+		navButtonPress="handleNavButtonPress" >
+		<headerContent>
+			<Button
+				icon="sap-icon://cart"
+				visible="{device>/isPhone}"
+				tooltip="show shoping cart"
+				press="handleCartButtonPress" />
+		</headerContent>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button
+					icon="sap-icon://add"
+					text="Add to Cart"
+					tooltip="Add product to your shoping cart"
+					press="handleAddButtonPress" />
+			</Toolbar>
+		</footer>
+		<content>
+			<ObjectHeader
+				title="{Name}"
+				number="{
+					path : 'Price',
+					formatter : '.formatter.price'
+				}"
+				numberUnit="EUR">
+				<attributes>
+					<ObjectAttribute
+						text="{SupplierName}" />
+					<ObjectAttribute
+						text="{ShortDescription}" />
+					<ObjectAttribute
+						text="{Weight}g" />
+				</attributes>
+				<firstStatus>
+					<ObjectStatus
+						text="{
+							path : 'status',
+							formatter : '.formatter.statusText'
+						}"
+						state="{
+							path : 'status',
+							formatter : '.formatter.statusState'
+						}" />
+				</firstStatus>
+			</ObjectHeader>
+			<VBox alignItems="Center">
+				<Image
+					src= "{
+							path : 'PictureUrl',
+							formatter : '.formatter.pictureUrl'
+						}"
+					decorative="true"
+					densityAware="false" />
+			</VBox>
+		</content>
+	</Page>
+</mvc:View>
