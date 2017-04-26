@@ -111,12 +111,12 @@ exports.getProducts = function(){
 exports.getProduct = function(pid){
     return {
         pid: pid,
-        name: "Fish Oil",
-        price: 122.3,
-        supplier: "XK export",
-        desc: "this is world best fish oil",
-        weight: "248",
-        status: "available",
+        Name: "Fish Oil",
+        Price: 122.3,
+        SupplierName: "XK export",
+        ShortDescription: "this is world best fish oil",
+        Weight: "248",
+        status: "A",
         PictureUrl: "pic1.jpg"
     }
 }

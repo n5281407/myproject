@@ -30,20 +30,5 @@ sap.ui.define([
             })            
         }
     });
-    // xsoft.views.pages.Product.load = function(index){
-    //     var that = this;
-    //     var proxy = new xsoft.service.ServiceProxy("xsoft.service.getProduct", true);
-    //     proxy.execute({
-    //         param: {
-    //             pid: index
-    //         },
-    //         succeeded: function(data){
-    //             data = JSON.parse(data);
-    //             var oModel = new JSONModel();
-    //             oModel.setData(data);
-    //             _view.setModel(oModel);                    
-    //         }
-    //     })
-    // };
     return ControllerController;
 });
