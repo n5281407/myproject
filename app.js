@@ -1,4 +1,5 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var pm = require('./processor/ProductManager.js');
 var app = express();
 
@@ -7,6 +8,10 @@ app.set('port', process.env.PORT || 8088);
 console.log("current enviroment is: " + app.get('env'));
 
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 app.get('/', function (req, res) {
     // res.type('text/plain');
@@ -24,6 +29,20 @@ app.get('/api/product/:pid', function(req, res){
     var pid = req.params.pid;
     var data = pm.getProduct(pid);
     res.json(data);
+});
+
+app.post('/api/product', function(req, res){
+    var param = {};
+    param.icon = req.body.icon;
+    param.number = req.body.number;
+    param.numberUnit = req.body.numberUnit;
+    param.title = req.body.title;
+    param.info = req.body.info;
+    param.infoState = req.body.infoState;
+    pm.addProduct(param);
+    res.json({
+        state: "success"
+    });
 });
 
 app.get('/about', function (req, res) {

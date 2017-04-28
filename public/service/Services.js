@@ -12,5 +12,11 @@ xsoft.service.Services = [
         url: "/api/product/{pid}",
         action: "GET",
         expect: "json"
-    }    
+    },
+    {
+        service: "xsoft.service.addProduct",
+        url: "/api/product",
+        action: "POST",
+        expect: "json"
+    }
 ];

@@ -20,7 +20,7 @@ var mockData = [
         "title": "Approve Leave Requests",
         "info": "Overdue",
         "infoState": "Error",
-        "pid": "2"
+        "pid": 2
     },
     {
         "type": "Create",
@@ -115,7 +115,26 @@ var mockData = [
 
 exports.setApp = function(app){
     myApp = app;
-}
+};
+
+exports.addProduct = function(param){
+    new Product(
+        {
+            icon: param.icon,
+            number: param.number,
+            numberUnit: param.numberUnit,
+            title: param.title,
+            info: param.info,
+            infoState: param.infoState
+        }
+    ).save(function(err, product){
+        if(err){
+            throw new Error("internal error");
+        }else{
+            console.log("new item added");
+        }
+    });
+};
 
 exports.getProducts = function(){
     switch(myApp.get('env')){
