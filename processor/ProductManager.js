@@ -136,7 +136,7 @@ exports.addProduct = function(param){
     });
 };
 
-exports.getProducts = function(){
+exports.getProducts = function(res){
     switch(myApp.get('env')){
         case 'development':
             mongoose.connect('mongodb://localhost:27017/test',opts);
@@ -148,6 +148,7 @@ exports.getProducts = function(){
             throw new Error('Unknown execution environment: ' + app.get('env'));
     }; 
     var db = mongoose.connection;
+    var convertProducts = [];
     db.on('error', function(){
         console.error('connection failed');
     });
@@ -160,15 +161,33 @@ exports.getProducts = function(){
             }else{
                 if(products.length){
                     console.log(products.length + " items found.");
+                    convertProducts = products.map(function(item){
+                        var val = {
+                            pid: item.id,
+                            icon: item.icon,
+                            title: item.title,
+                            info: item.info,
+                            number: item.number,
+                            numberUnit: item.numberUnit,
+                            infoState: item.infoState
+                        }
+                        console.log("val: " + val.pid);
+                        return val;
+                    });
                 }else{
                     console.error("no item found");
                 }
                 mongoose.connection.close();
             }
+            console.log('new array length: ' + convertProducts.length);
+            for(var i = 0; i < convertProducts.length; i++){
+                console.log(convertProducts[i]);
+            }
+            // return convertProducts;
+            res.json(convertProducts);
         });        
-    }); 
-
-    return mockData;
+    });      
+    // return mockData;
 };
 
 exports.getProduct = function(pid){

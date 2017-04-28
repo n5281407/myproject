@@ -21,8 +21,9 @@ app.get('/', function (req, res) {
 
 app.get('/api/products', function (req, res) {
     pm.setApp(app);
-    var data = pm.getProducts();
-    res.json(data);
+    pm.getProducts(res);
+    // var data = pm.getProducts(res);
+    // res.json(data);
 });
 
 app.get('/api/product/:pid', function(req, res){

@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var productSchema = mongoose.Schema({
     icon: String,
     number: String,
+    numberUnit: String,
     title: String,
     info: String,
     infoState: String,
