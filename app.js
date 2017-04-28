@@ -4,6 +4,8 @@ var app = express();
 
 app.set('port', process.env.PORT || 8088);
 
+console.log("current enviroment is: " + app.get('env'));
+
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
@@ -13,6 +15,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/products', function (req, res) {
+    pm.setApp(app);
     var data = pm.getProducts();
     res.json(data);
 });
@@ -44,5 +47,5 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(app.get('port'), function () {
-    console.log('Express started, press Ctrl - C to terminated');
+    console.log('Express started at port: ' + app.get('port') + ', press Ctrl - C to terminated');
 })

@@ -1,3 +1,12 @@
+var mongoose = require('mongoose');
+var opts = {
+    server: {
+        socketOptions: {keepAlive: 1}
+    }
+};
+var myApp;
+var Product = require('../models/Product.js');
+
 var mockData = [
     {
         "icon": "sap-icon://hint",
@@ -104,7 +113,42 @@ var mockData = [
     }
 ];
 
+exports.setApp = function(app){
+    myApp = app;
+}
+
 exports.getProducts = function(){
+    switch(myApp.get('env')){
+        case 'development':
+            mongoose.connect('mongodb://localhost:27017/test',opts);
+            break;
+        case 'production':
+            mongoose.connect('mongodb://localhost:27017/test',opts);
+            break;
+        default:
+            throw new Error('Unknown execution environment: ' + app.get('env'));
+    }; 
+    var db = mongoose.connection;
+    db.on('error', function(){
+        console.error('connection failed');
+    });
+    db.once('open', function() {
+    // we're connected!
+        console.info('connection successed');
+        Product.find(function(err, products){
+            if(err){
+                console.error(err);
+            }else{
+                if(products.length){
+                    console.log(products.length + " items found.");
+                }else{
+                    console.error("no item found");
+                }
+                mongoose.connection.close();
+            }
+        });        
+    }); 
+
     return mockData;
 };
 
