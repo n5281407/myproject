@@ -14,16 +14,12 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/', function (req, res) {
-    // res.type('text/plain');
-    // res.send('Hello there and welcome');
     res.redirect(303, 'index.html');
 });
 
 app.get('/api/products', function (req, res) {
     pm.setApp(app);
     pm.getProducts(res);
-    // var data = pm.getProducts(res);
-    // res.json(data);
 });
 
 app.get('/api/product/:pid', function(req, res){

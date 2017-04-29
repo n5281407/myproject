@@ -75,9 +75,15 @@ sap.ui.define([
                     new sap.m.Label({
                         text: "Product price unit (e.g. EURO, USD...)",
                         labelFor: "input-unit"}),     
-                    new sap.m.Input("input-unit", {
-                        type: sap.m.InputType.Text,
-                        placeholder: "Input product price unit here..."
+                    new sap.m.ComboBox("input-unit", {
+                        width: "100%",
+                        selectedKey: "USD",
+                        items: [
+                           new sap.ui.core.Item({text: "USD", key: "USD"}),
+                           new sap.ui.core.Item({text: "EUR", key: "EUR"}),
+                           new sap.ui.core.Item({text: "RMB", key: "RMB"}),
+                           new sap.ui.core.Item({text: "CAD", key: "CAD"}),
+                        ]
                     }).addStyleClass("sapUiSmallMarginBottom").bindProperty("value", "/numberUnit"),  
                     new sap.m.Label({
                         text: "Product title",
@@ -97,10 +103,16 @@ sap.ui.define([
                     new sap.m.Label({
                         text: "Product status (valid: Warning, Error, Success)",
                         labelFor: "input-status"}),     
-                    new sap.m.Input("input-status", {
-                        value: {path: "infoState"},
-                        type: sap.m.InputType.Text,
-                        placeholder: "Input product current status here..."
+                    new sap.m.ComboBox("input-status", {
+                        width: "100%",
+                        selectedKey: "S",
+                        // type: sap.m.InputType.Text,
+                        // placeholder: "Input product current status here..."
+                        items: [
+                            new sap.ui.core.Item({text: "Success", key: "S"}),
+                            new sap.ui.core.Item({text: "Warning", key: "W"}),
+                            new sap.ui.core.Item({text: "Error", key: "E"}),
+                        ]
                     }).addStyleClass("sapUiSmallMarginBottom").bindProperty("value","/infoState"),                                                                                                                    
                 ]
             }).addStyleClass("sapUiContentPadding");    
@@ -109,6 +121,7 @@ sap.ui.define([
             var dialog = new Dialog({
                 title: "Add New Product",
                 type: sap.m.DialogType.Standard,
+                draggable: true,
                 // content: [sap.m.Label({text: "Hello Me"})],
                 content: vPanel,
                 beginButton: new sap.m.Button({
