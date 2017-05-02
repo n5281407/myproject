@@ -26,7 +26,8 @@ sap.ui.define([
             this.getView().setModel(oModel);
             var tileContainer = new TileContainer();
             this.properties.tileContainer = tileContainer;
-            var showroom = sap.ui.view({id:"showroom",
+            var showroom = sap.ui.view({
+                // id:"showroom",
                 viewName:"xsoft.views.pages.Showroom",
                 type:sap.ui.core.mvc.ViewType.XML});            
             var app = this.getView().byId("myApp");
@@ -133,8 +134,12 @@ sap.ui.define([
                         proxy.execute({
                             data: oParam,
                             succeeded: function(){
-                                MessageToast.show("product added");
+                                MessageToast.show("product added");                             
                                 dialog.close();
+                                var oPage = sap.ui.view({id:"showroom",
+                                    viewName:"xsoft.views.pages.Showroom",
+                                    type:sap.ui.core.mvc.ViewType.XML});
+                                xsoft.views.Shell.navTo(oPage);                                   
                             },
                             failed: function(){
                                 dialog.close();
@@ -208,6 +213,7 @@ sap.ui.define([
     xsoft.views.Shell.navTo = function(oPage){
         _app.removePage(_currentPage);
         _app.addPage(oPage);
+        _currentPage.destroy();
         _currentPage = oPage;
     }    
 
