@@ -136,7 +136,7 @@ sap.ui.define([
                             succeeded: function(){
                                 MessageToast.show("product added");                             
                                 dialog.close();
-                                var oPage = sap.ui.view({id:"showroom",
+                                var oPage = sap.ui.view({
                                     viewName:"xsoft.views.pages.Showroom",
                                     type:sap.ui.core.mvc.ViewType.XML});
                                 xsoft.views.Shell.navTo(oPage);                                   

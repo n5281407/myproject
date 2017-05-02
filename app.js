@@ -28,6 +28,13 @@ app.get('/api/product/:pid', function(req, res){
     res.json(data);
 });
 
+app.delete('/api/product/:pid', function(req, res){
+    var pid = req.params.pid;
+    // var data = pm.getProduct(pid);
+    pm.delProduct(pid, res);
+    // res.json(data);
+});
+
 app.post('/api/product', function(req, res){
     var param = {};
     param.icon = req.body.icon;

@@ -21,15 +21,20 @@
 			<Toolbar>
 				<ToolbarSpacer/>
 				<Button
-					icon="sap-icon://add"
-					text="Add to Cart"
-					tooltip="Add product to your shoping cart"
+					icon="sap-icon://accept"
+					text="Update Item"
+					tooltip="Update item details"
 					press="handleAddButtonPress" />
+				<Button
+					icon="sap-icon://decline"
+					text="Remove Item"
+					tooltip="Remove item from showroom"
+					press="handleDelButtonPress" />					
 			</Toolbar>
 		</footer>
 		<content>
 			<ObjectHeader
-				title="{Name}"
+				title="ID: {Name}"
 				number="{
 					path : 'Price',
 					formatter : '.formatter.price'

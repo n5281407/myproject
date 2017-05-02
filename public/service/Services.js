@@ -18,5 +18,11 @@ xsoft.service.Services = [
         url: "/api/product",
         action: "POST",
         expect: "json"
-    }
+    },
+    {
+        service: "xsoft.service.delProduct",
+        url: "/api/product/{pid}",
+        action: "DELETE",
+        expect: "json"
+    }    
 ];

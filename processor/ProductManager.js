@@ -193,7 +193,7 @@ exports.getProducts = function(res){
 exports.getProduct = function(pid){
     return {
         pid: pid,
-        Name: "Fish Oil",
+        Name: pid,
         Price: 122.3,
         SupplierName: "XK export",
         ShortDescription: "this is world best fish oil",
@@ -201,4 +201,56 @@ exports.getProduct = function(pid){
         status: "A",
         PictureUrl: "pic1.jpg"
     }
+};
+
+exports.delProduct = function(pid, res){
+    // switch(myApp.get('env')){
+    //     case 'development':
+    //         mongoose.connect('mongodb://localhost:27017/test',opts);
+    //         break;
+    //     case 'production':
+    //         mongoose.connect('mongodb://localhost:27017/test',opts);
+    //         break;
+    //     default:
+    //         throw new Error('Unknown execution environment: ' + app.get('env'));
+    // }; 
+    // var db = mongoose.connection;
+    // var convertProducts = [];
+    // db.on('error', function(){
+    //     console.error('connection failed');
+    // });
+    // db.once('open', function(){
+    //     Product.findByIdAndRemove(pid, function(err, product){
+    //         res.json({
+    //             message: "Delete item: " + pid + " successfully."
+    //         })
+    //     });
+    // });  
+    console.log("request delete item: " + pid);
+    // Product.findByIdAndRemove(pid, function(err, product){
+    //     console.log("deleted: " + pid);
+    //     res.send({
+    //         message: "Delete item: " + pid + " successfully."
+    //     });
+    // });
+    Product.findByIdAndRemove(pid, function (err, doc) {  
+        console.log(doc);
+        var response = {
+            message: "Todo successfully deleted",
+        };
+        // res.send(response);
+    }); 
+    res.json({state: "done"});
+    // Product.remove({_id: pid}, function(err){
+    //     if(!err){
+    //         res.json({state: "success"});
+    //     }else{
+    //         res.json({state: "failed"});
+    //     }
+    // }); 
+    // Product.remove({_id: pid}).then(function(err){
+    //     if(!err){
+    //         res.json({state: "success"});
+    //     }
+    // });
 }
