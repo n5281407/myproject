@@ -20,9 +20,9 @@
 			</u:headItems>
 			<u:headEndItems>
 				<u:ShellHeadItem
-					icon="sap-icon://log"
-					tooltip="Logoff"
-					press="handleLogoffPress" />
+					icon="sap-icon://add-product"
+					tooltip="Add Product"
+					press="handleAddProductPress" />
 			</u:headEndItems>
 			<u:user>
 				<u:ShellHeadUserItem
@@ -35,7 +35,12 @@
 					search="handleSearchPressed"/>
 			</u:search>
 			<u:paneContent>
-				<Text text="Lorem ipsum" />
+				<!--<Text text="Lorem ipsum" />-->
+				<Text text="This is a showcase to demostrate standardized CRUD operations
+							of a product maintainance application. The frontend use rich 
+							internet application framework - OpenUI5. The backend implemented
+							by using Node.JS and Express. Using MongoDB as persistent layer,
+							together with ODM - Mongoose technology." />
 			</u:paneContent>
             <u:content>
                 <!--<TileContainer

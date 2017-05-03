@@ -2,9 +2,9 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 	"use strict";
 
 	var mStatusState = {
-		"A": "Success",
-		"O": "Warning",
-		"D": "Error"
+		"S": "Success",
+		"W": "Warning",
+		"E": "Error"
 	};
 
 	var formatter = {
@@ -36,9 +36,9 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 				// "A": oBundle.getText("STATUS_A"),
 				// "O": oBundle.getText("STATUS_O"),
 				// "D": oBundle.getText("STATUS_D")
-				"A": "Available",
-				"O": "Out of stock",
-				"D": "Discontinued"
+				"S": "Success",
+				"W": "Warning",
+				"E": "Error"
 			};
 
 			return mStatusText[status] || status;

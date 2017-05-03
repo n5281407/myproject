@@ -45,7 +45,7 @@ sap.ui.define([
             oItem.setSelected(!bState);
         },
 
-        handleLogoffPress: function (oEvent) {
+        handleAddProductPress: function (oEvent) {
             var oModel = new sap.ui.model.json.JSONModel();
             var data  = {
                 icon: "",
@@ -63,9 +63,25 @@ sap.ui.define([
                     new sap.m.Label({
                         text: "Icon font for the product (e.g. sap-icon://inbox)",
                         labelFor: "input-icon"}),     
-                    new sap.m.Input("input-icon", {
-                        type: sap.m.InputType.Url,
-                        placeholder: "Input icon font URL here..."
+                    new sap.m.ComboBox("input-icon", {
+                        width: "100%",
+                        selectedKey: "sap-icon://sap-ui5",
+                        items: [
+                            new sap.ui.core.Item({text: "sap-icon://wrench", key: "sap-icon://wrench"}),
+                            new sap.ui.core.Item({text: "sap-icon://web-cam", key: "sap-icon://web-cam"}),
+                            new sap.ui.core.Item({text: "sap-icon://wallet", key: "sap-icon://wallet"}),
+                            new sap.ui.core.Item({text: "sap-icon://video", key: "sap-icon://video"}),
+                            new sap.ui.core.Item({text: "sap-icon://umbrella", key: "sap-icon://umbrella"}),
+                            new sap.ui.core.Item({text: "sap-icon://tags", key: "sap-icon://tags"}),
+                            new sap.ui.core.Item({text: "sap-icon://sys-monitor", key: "sap-icon://sys-monitor"}),
+                            new sap.ui.core.Item({text: "sap-icon://suitcase", key: "sap-icon://suitcase"}),
+                            new sap.ui.core.Item({text: "sap-icon://study-level", key: "sap-icon://study-level"}),
+                            new sap.ui.core.Item({text: "sap-icon://stethoscope", key: "sap-icon://stethoscope"}),
+                            new sap.ui.core.Item({text: "sap-icon://simulate", key: "sap-icon://simulate"}),
+                            new sap.ui.core.Item({text: "sap-icon://projector", key: "sap-icon://projector"}),
+                            new sap.ui.core.Item({text: "sap-icon://pharmacy", key: "sap-icon://pharmacy"}),
+                            new sap.ui.core.Item({text: "sap-icon://sap-ui5", key: "sap-icon://sap-ui5"}),
+                        ]
                     }).addStyleClass("sapUiSmallMarginBottom").bindProperty("value", "/icon"),
                     new sap.m.Label({
                         text: "Product price",

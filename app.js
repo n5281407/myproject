@@ -24,8 +24,9 @@ app.get('/api/products', function (req, res) {
 
 app.get('/api/product/:pid', function(req, res){
     var pid = req.params.pid;
-    var data = pm.getProduct(pid);
-    res.json(data);
+    // var data = pm.getProduct(pid, res);
+    // res.json(data);
+    pm.getProduct(pid, res);
 });
 
 app.delete('/api/product/:pid', function(req, res){

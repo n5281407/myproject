@@ -137,24 +137,16 @@ exports.addProduct = function(param){
 };
 
 exports.getProducts = function(res){
-    switch(myApp.get('env')){
-        case 'development':
-            mongoose.connect('mongodb://localhost:27017/test',opts);
-            break;
-        case 'production':
-            mongoose.connect('mongodb://localhost:27017/test',opts);
-            break;
-        default:
-            throw new Error('Unknown execution environment: ' + app.get('env'));
-    }; 
-    var db = mongoose.connection;
-    var convertProducts = [];
-    db.on('error', function(){
-        console.error('connection failed');
-    });
-    db.once('open', function() {
-    // we're connected!
-        console.info('connection successed');
+        switch(myApp.get('env')){
+            case 'development':
+                mongoose.connect("mongodb://localhost:27017/test", opts);
+                break;
+            case 'production':
+                mongoose.connect("mongodb://localhost:27017/test", opts);
+                break;
+            default:
+                throw new Error('Unknown execution environment: ' + myApp.get('env'));
+        }        
         Product.find(function(err, products){
             if(err){
                 console.error(err);
@@ -177,80 +169,71 @@ exports.getProducts = function(res){
                 }else{
                     console.error("no item found");
                 }
-                mongoose.connection.close();
+
             }
+            mongoose.connection.close();
             console.log('new array length: ' + convertProducts.length);
             for(var i = 0; i < convertProducts.length; i++){
                 console.log(convertProducts[i]);
             }
-            // return convertProducts;
             res.json(convertProducts);
-        });        
     });      
-    // return mockData;
 };
 
-exports.getProduct = function(pid){
-    return {
-        pid: pid,
-        Name: pid,
-        Price: 122.3,
-        SupplierName: "XK export",
-        ShortDescription: "this is world best fish oil",
-        Weight: "248",
-        status: "A",
-        PictureUrl: "pic1.jpg"
-    }
+exports.getProduct = function(pid, res){
+    switch(myApp.get('env')){
+        case 'development':
+            mongoose.connect("mongodb://localhost:27017/test", opts);
+            break;
+        case 'production':
+            mongoose.connect("mongodb://localhost:27017/test", opts);
+            break;
+        default:
+            throw new Error('Unknown execution environment: ' + myApp.get('env'));
+    }          
+    Product.findById(pid, function(err, product){
+        console.log(product);
+        mongoose.connection.close();
+        var s = "";
+        if(product.infoState == "Success"){
+            s = "S";
+        }else if(product.infoState == "Warning"){
+            s = "W";
+        }else{
+            s = "E";
+        }
+        var data = {
+            pid: pid,
+            Name: pid,
+            Price: product.number,
+            Unit: product.numberUnit,
+            info: product.info,
+            status: s,
+            PictureUrl: "pic1.jpg",
+            title: product.title
+        }
+        res.json(data);
+    });
 };
 
 exports.delProduct = function(pid, res){
-    // switch(myApp.get('env')){
-    //     case 'development':
-    //         mongoose.connect('mongodb://localhost:27017/test',opts);
-    //         break;
-    //     case 'production':
-    //         mongoose.connect('mongodb://localhost:27017/test',opts);
-    //         break;
-    //     default:
-    //         throw new Error('Unknown execution environment: ' + app.get('env'));
-    // }; 
-    // var db = mongoose.connection;
-    // var convertProducts = [];
-    // db.on('error', function(){
-    //     console.error('connection failed');
-    // });
-    // db.once('open', function(){
-    //     Product.findByIdAndRemove(pid, function(err, product){
-    //         res.json({
-    //             message: "Delete item: " + pid + " successfully."
-    //         })
-    //     });
-    // });  
+    switch(myApp.get('env')){
+        case 'development':
+            mongoose.connect("mongodb://localhost:27017/test", opts);
+            break;
+        case 'production':
+            mongoose.connect("mongodb://localhost:27017/test", opts);
+            break;
+        default:
+            throw new Error('Unknown execution environment: ' + myApp.get('env'));
+    }            
     console.log("request delete item: " + pid);
-    // Product.findByIdAndRemove(pid, function(err, product){
-    //     console.log("deleted: " + pid);
-    //     res.send({
-    //         message: "Delete item: " + pid + " successfully."
-    //     });
-    // });
     Product.findByIdAndRemove(pid, function (err, doc) {  
         console.log(doc);
+        mongoose.connection.close();
         var response = {
-            message: "Todo successfully deleted",
+            message: "item: " + pid + "successfully deleted",
         };
-        // res.send(response);
+        res.json(response);
     }); 
-    res.json({state: "done"});
-    // Product.remove({_id: pid}, function(err){
-    //     if(!err){
-    //         res.json({state: "success"});
-    //     }else{
-    //         res.json({state: "failed"});
-    //     }
-    // }); 
-    // Product.remove({_id: pid}).then(function(err){
-    //     if(!err){
-    //         res.json({state: "success"});
-    //     }
-    // });
 }

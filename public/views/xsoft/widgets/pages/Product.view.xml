@@ -11,11 +11,11 @@
 		showNavButton="{device>/isPhone}"
 		navButtonPress="handleNavButtonPress" >
 		<headerContent>
-			<Button
+			<!--<Button
 				icon="sap-icon://cart"
 				visible="{device>/isPhone}"
 				tooltip="show shoping cart"
-				press="handleCartButtonPress" />
+				press="handleCartButtonPress" />-->
 		</headerContent>
 		<footer>
 			<Toolbar>
@@ -39,25 +39,24 @@
 		</footer>
 		<content>
 			<ObjectHeader
-				title="ID: {Name}"
+				title="ID: {pid}"
 				number="{
 					path : 'Price',
 					formatter : '.formatter.price'
 				}"
-				numberUnit="EUR">
+				numberUnit="{Unit}">
 				<attributes>
 					<ObjectAttribute
-						text="{SupplierName}" />
-					<ObjectAttribute
+						text="{title}" />
+					<!--<ObjectAttribute
 						text="{ShortDescription}" />
 					<ObjectAttribute
-						text="{Weight}g" />
+						text="{Weight}g" />-->
 				</attributes>
 				<firstStatus>
 					<ObjectStatus
 						text="{
-							path : 'status',
-							formatter : '.formatter.statusText'
+							path : 'info'
 						}"
 						state="{
 							path : 'status',
