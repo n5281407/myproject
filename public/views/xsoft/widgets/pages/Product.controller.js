@@ -31,6 +31,9 @@ sap.ui.define([
                 }
             })            
         },
+        handleCancelButtonPress: function(){
+            xsoft.views.Shell.goHome();
+        },
         handleDelButtonPress: function(){
             var proxy = new xsoft.service.ServiceProxy("xsoft.service.delProduct", true);
             proxy.execute({

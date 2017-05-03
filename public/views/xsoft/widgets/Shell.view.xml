@@ -16,7 +16,6 @@
 				<u:ShellHeadItem
 					tooltip="Home"
 					icon="sap-icon://home"
-					visible="false"
 					press="handlePressHome" />
 			</u:headItems>
 			<u:headEndItems>

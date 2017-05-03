@@ -21,6 +21,11 @@
 			<Toolbar>
 				<ToolbarSpacer/>
 				<Button
+					icon="sap-icon://cancel"
+					text="Back"
+					tooltip="Go back"
+					press="handleCancelButtonPress" />				
+				<Button
 					icon="sap-icon://accept"
 					text="Update Item"
 					tooltip="Update item details"

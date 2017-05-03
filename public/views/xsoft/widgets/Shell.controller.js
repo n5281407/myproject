@@ -55,6 +55,7 @@ sap.ui.define([
                 info: "",
                 infoState: "",
             };
+            var that = this;
             oModel.setData(data);
             var vPanel = new sap.ui.layout.VerticalLayout({
                 width: "100%",
@@ -136,10 +137,11 @@ sap.ui.define([
                             succeeded: function(){
                                 MessageToast.show("product added");                             
                                 dialog.close();
-                                var oPage = sap.ui.view({
-                                    viewName:"xsoft.views.pages.Showroom",
-                                    type:sap.ui.core.mvc.ViewType.XML});
-                                xsoft.views.Shell.navTo(oPage);                                   
+                                // var oPage = sap.ui.view({
+                                //     viewName:"xsoft.views.pages.Showroom",
+                                //     type:sap.ui.core.mvc.ViewType.XML});
+                                // xsoft.views.Shell.navTo(oPage);           
+                                xsoft.views.Shell.goHome();
                             },
                             failed: function(){
                                 dialog.close();
@@ -159,6 +161,10 @@ sap.ui.define([
                 }
             });
             dialog.open();
+        },
+
+        handlePressHome: function(oEvent){
+            xsoft.views.Shell.goHome();
         },
 
         handleUserItemPressed: function (oEvent) {
@@ -215,7 +221,14 @@ sap.ui.define([
         _app.addPage(oPage);
         _currentPage.destroy();
         _currentPage = oPage;
-    }    
+    };
+
+    xsoft.views.Shell.goHome = function(){
+        var oPage = sap.ui.view({
+            viewName:"xsoft.views.pages.Showroom",
+            type:sap.ui.core.mvc.ViewType.XML});
+        xsoft.views.Shell.navTo(oPage);    
+    };
 
     return ControllerController;
 
