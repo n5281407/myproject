@@ -24,6 +24,7 @@ sap.ui.define([
                 },
                 succeeded: function(data){
                     data = JSON.parse(data);
+                    that.properties.modelData = data;
                     var oModel = new JSONModel();
                     oModel.setData(data);
                     oView.setModel(oModel); 
@@ -48,6 +49,40 @@ sap.ui.define([
                     xsoft.views.Shell.navTo(oPage);                       
                 }
             })
+        },
+        handleUpdateButtonPress: function(){
+            var proxy = new xsoft.service.ServiceProxy("xsoft.service.updateProduct", true);
+            var state = "";
+            if(this.properties.modelData.status == "S"){
+                state = "Success";
+            }else if(this.properties.modelData.status == "E"){
+                state = "Error";
+            }else if(this.properties.modelData.status == "W"){
+                state = "Warning";
+            }
+            console.log("yyy: " + this.properties.modelData.pid);
+            var data = {
+                icon: this.properties.modelData.icon,
+                number: this.properties.modelData.Price,
+                numberUnit: this.properties.modelData.Unit,
+                title: this.properties.modelData.title,
+                info: this.properties.modelData.info,
+                infoState: state,
+                pid: this.properties.modelData.pid,
+            };
+            proxy.execute({
+                data: data,
+                param: {
+                    pid: this.properties.pid
+                },
+                succeeded: function(){
+                    MessageToast.show("product updated");                             
+                    var oPage = sap.ui.view({id:"showroom",
+                        viewName:"xsoft.views.pages.Showroom",
+                        type:sap.ui.core.mvc.ViewType.XML});
+                    xsoft.views.Shell.navTo(oPage);                     
+                }
+            });
         },
     });
     return ControllerController;

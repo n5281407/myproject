@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var opts = {
     server: {
-        socketOptions: {keepAlive: 1}
+        socketOptions: { keepAlive: 1 }
     }
 };
 var myApp;
@@ -113,11 +113,11 @@ var mockData = [
     }
 ];
 
-exports.setApp = function(app){
+exports.setApp = function (app) {
     myApp = app;
 };
 
-exports.addProduct = function(param){
+exports.addProduct = function (param) {
     new Product(
         {
             icon: param.icon,
@@ -127,61 +127,17 @@ exports.addProduct = function(param){
             info: param.info,
             infoState: param.infoState
         }
-    ).save(function(err, product){
-        if(err){
+    ).save(function (err, product) {
+        if (err) {
             throw new Error("internal error");
-        }else{
+        } else {
             console.log("new item added");
         }
     });
 };
 
-exports.getProducts = function(res){
-        switch(myApp.get('env')){
-            case 'development':
-                mongoose.connect("mongodb://localhost:27017/test", opts);
-                break;
-            case 'production':
-                mongoose.connect("mongodb://localhost:27017/test", opts);
-                break;
-            default:
-                throw new Error('Unknown execution environment: ' + myApp.get('env'));
-        }        
-        Product.find(function(err, products){
-            if(err){
-                console.error(err);
-            }else{
-                if(products.length){
-                    console.log(products.length + " items found.");
-                    convertProducts = products.map(function(item){
-                        var val = {
-                            pid: item.id,
-                            icon: item.icon,
-                            title: item.title,
-                            info: item.info,
-                            number: item.number,
-                            numberUnit: item.numberUnit,
-                            infoState: item.infoState
-                        }
-                        console.log("val: " + val.pid);
-                        return val;
-                    });
-                }else{
-                    console.error("no item found");
-                }
-
-            }
-            mongoose.connection.close();
-            console.log('new array length: ' + convertProducts.length);
-            for(var i = 0; i < convertProducts.length; i++){
-                console.log(convertProducts[i]);
-            }
-            res.json(convertProducts);
-    });      
-};
-
-exports.getProduct = function(pid, res){
-    switch(myApp.get('env')){
+exports.updateProduct = function (param, res) {
+    switch (myApp.get('env')) {
         case 'development':
             mongoose.connect("mongodb://localhost:27017/test", opts);
             break;
@@ -190,16 +146,91 @@ exports.getProduct = function(pid, res){
             break;
         default:
             throw new Error('Unknown execution environment: ' + myApp.get('env'));
-    }          
-    Product.findById(pid, function(err, product){
+    }
+                console.log("xxx: " + param.pid);
+    Product.findById(param.pid, function(err, product){
+        if(err){
+            //todo: error handling
+        }else{
+            product.icon = param.icon;
+            product.title = param.title;
+            product.info = param.info;
+            product.number = param.number;
+            product.numberUnit = param.numberUnit;
+            product.infoState = param.infoState;
+            product.save(function(err, updatedProduct){
+                mongoose.connection.close();
+                console.log(product.pid + " updated.");
+                res.json({message: product.pid + " updated."});
+            });
+        }
+    });
+};
+
+exports.getProducts = function (res) {
+    switch (myApp.get('env')) {
+        case 'development':
+            mongoose.connect("mongodb://localhost:27017/test", opts);
+            break;
+        case 'production':
+            mongoose.connect("mongodb://localhost:27017/test", opts);
+            break;
+        default:
+            throw new Error('Unknown execution environment: ' + myApp.get('env'));
+    }
+    Product.find(function (err, products) {
+        if (err) {
+            console.error(err);
+        } else {
+            if (products.length) {
+                console.log(products.length + " items found.");
+                convertProducts = products.map(function (item) {
+                    var val = {
+                        pid: item.id,
+                        icon: item.icon,
+                        title: item.title,
+                        info: item.info,
+                        number: item.number,
+                        numberUnit: item.numberUnit,
+                        infoState: item.infoState
+                    }
+                    console.log("val: " + val.pid);
+                    return val;
+                });
+            } else {
+                console.error("no item found");
+            }
+
+        }
+        mongoose.connection.close();
+        console.log('new array length: ' + convertProducts.length);
+        for (var i = 0; i < convertProducts.length; i++) {
+            console.log(convertProducts[i]);
+        }
+        res.json(convertProducts);
+    });
+};
+
+exports.getProduct = function (pid, res) {
+    switch (myApp.get('env')) {
+        case 'development':
+            mongoose.connect("mongodb://localhost:27017/test", opts);
+            break;
+        case 'production':
+            mongoose.connect("mongodb://localhost:27017/test", opts);
+            break;
+        default:
+            throw new Error('Unknown execution environment: ' + myApp.get('env'));
+    }
+    Product.findById(pid, function (err, product) {
         console.log(product);
         mongoose.connection.close();
         var s = "";
-        if(product.infoState == "Success"){
+        if (product.infoState == "Success") {
             s = "S";
-        }else if(product.infoState == "Warning"){
+        } else if (product.infoState == "Warning") {
             s = "W";
-        }else{
+        } else {
             s = "E";
         }
         var data = {
@@ -210,14 +241,15 @@ exports.getProduct = function(pid, res){
             info: product.info,
             status: s,
             PictureUrl: "pic1.jpg",
-            title: product.title
+            title: product.title,
+            icon: product.icon,
         }
         res.json(data);
     });
 };
 
-exports.delProduct = function(pid, res){
-    switch(myApp.get('env')){
+exports.delProduct = function (pid, res) {
+    switch (myApp.get('env')) {
         case 'development':
             mongoose.connect("mongodb://localhost:27017/test", opts);
             break;
@@ -226,14 +258,14 @@ exports.delProduct = function(pid, res){
             break;
         default:
             throw new Error('Unknown execution environment: ' + myApp.get('env'));
-    }            
+    }
     console.log("request delete item: " + pid);
-    Product.findByIdAndRemove(pid, function (err, doc) {  
+    Product.findByIdAndRemove(pid, function (err, doc) {
         console.log(doc);
         mongoose.connection.close();
         var response = {
             message: "item: " + pid + "successfully deleted",
         };
         res.json(response);
-    }); 
+    });
 }

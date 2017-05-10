@@ -20,6 +20,12 @@ xsoft.service.Services = [
         expect: "json"
     },
     {
+        service: "xsoft.service.updateProduct",
+        url: "/api/product/{pid}",
+        action: "POST",
+        expect: "json"
+    },    
+    {
         service: "xsoft.service.delProduct",
         url: "/api/product/{pid}",
         action: "DELETE",

@@ -1,6 +1,7 @@
 <mvc:View
 	controllerName="xsoft.views.pages.Product"
 	xmlns:l="sap.ui.layout"
+	xmlns:c="sap.ui.core"
 	xmlns:u="sap.ui.unified"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m"
@@ -29,7 +30,7 @@
 					icon="sap-icon://accept"
 					text="Update Item"
 					tooltip="Update item details"
-					press="handleAddButtonPress" />
+					press="handleUpdateButtonPress" />
 				<Button
 					icon="sap-icon://decline"
 					text="Remove Item"
@@ -64,15 +65,63 @@
 						}" />
 				</firstStatus>
 			</ObjectHeader>
-			<VBox alignItems="Center">
-				<Image
+			<l:VerticalLayout width="100%">
+				<l:HorizontalLayout width="100%" class="sapUiSmallMargin">
+					<Label width="200px" text="Product Price: " labelFor="input-price" class="sapUiSmallMarginEnd"/>
+					<Input width="100%" id="input-price" class="sapUiSmallMarginEnd" value="{Price}"/>
+				</l:HorizontalLayout>
+				<l:HorizontalLayout width="100%" class="sapUiSmallMargin">
+					<Label width="200px" text="Product price unit: " labelFor="input-unit" class="sapUiSmallMarginEnd"/>
+					<ComboBox width="100%" id="input-unit" class="sapUiSmallMarginEnd" value="{Unit}">
+						<c:Item text="USD" key="USD"/>
+						<c:Item text="EUR" key="EUR"/>
+						<c:Item text="RMB" key="RMB"/>
+						<c:Item text="CAD" key="CAD"/>
+					</ComboBox>
+				</l:HorizontalLayout>	
+				<l:HorizontalLayout width="100%" class="sapUiSmallMargin">
+					<Label width="200px" text="Product title: " labelFor="input-title" class="sapUiSmallMarginEnd"/>
+					<Input width="100%" id="input-title" class="sapUiSmallMarginEnd" value="{title}"/>
+				</l:HorizontalLayout>	
+				<l:HorizontalLayout width="100%" class="sapUiSmallMargin">
+					<Label width="200px" text="Product Information: " labelFor="input-info" class="sapUiSmallMarginEnd"/>
+					<Input width="100%" id="input-info" class="sapUiSmallMarginEnd" value="{info}"/>
+				</l:HorizontalLayout>	
+				<l:HorizontalLayout width="100%" class="sapUiSmallMargin">
+					<Label width="200px" text="Product status: " labelFor="input-status" class="sapUiSmallMarginEnd"/>
+					<ComboBox width="100%" id="input-status" class="sapUiSmallMarginEnd" selectedKey="{status}">
+						<c:Item text="Success" key="S"/>
+						<c:Item text="Warning" key="W"/>
+						<c:Item text="Error" key="E"/>
+					</ComboBox>
+				</l:HorizontalLayout>	
+				<l:HorizontalLayout width="100%" class="sapUiSmallMargin">
+					<Label width="200px" text="Icon font for the product: " labelFor="input-icon" class="sapUiSmallMarginEnd"/>
+					<ComboBox width="100%" id="input-icon" class="sapUiSmallMarginEnd" value="{icon}">
+						<c:Item text="sap-icon://wrench" key="sap-icon://wrench"/>
+						<c:Item text="sap-icon://web-cam" key="sap-icon://web-cam"/>
+						<c:Item text="sap-icon://wallet" key="sap-icon://wallet"/>
+						<c:Item text="sap-icon://video" key="sap-icon://video"/>
+						<c:Item text="sap-icon://umbrella" key="sap-icon://umbrella"/>
+						<c:Item text="sap-icon://tags" key="sap-icon://tags"/>
+						<c:Item text="sap-icon://sys-monitor" key="sap-icon://sys-monitor"/>
+						<c:Item text="sap-icon://suitcase" key="sap-icon://suitcase"/>
+						<c:Item text="sap-icon://study-level" key="sap-icon://study-level"/>
+						<c:Item text="sap-icon://stethoscope" key="sap-icon://stethoscope"/>
+						<c:Item text="sap-icon://simulate" key="sap-icon://simulate"/>
+						<c:Item text="sap-icon://projector" key="sap-icon://projector"/>
+						<c:Item text="sap-icon://pharmacy" key="sap-icon://pharmacy"/>
+						<c:Item text="sap-icon://sap-ui5" key="sap-icon://sap-ui5"/>
+					</ComboBox>
+				</l:HorizontalLayout>																						
+				<!--Image
 					src= "{
 							path : 'PictureUrl',
 							formatter : '.formatter.pictureUrl'
 						}"
 					decorative="true"
-					densityAware="false" />
-			</VBox>
+					densityAware="false" / -->
+			</l:VerticalLayout>
 		</content>
 	</Page>
 </mvc:View>

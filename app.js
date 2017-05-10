@@ -36,6 +36,18 @@ app.delete('/api/product/:pid', function(req, res){
     // res.json(data);
 });
 
+app.post('/api/product/:pid', function(req, res){
+    var param = {};
+    param.icon = req.body.icon;
+    param.number = req.body.number;
+    param.numberUnit = req.body.numberUnit;
+    param.title = req.body.title;
+    param.info = req.body.info;
+    param.infoState = req.body.infoState;
+    param.pid = req.body.pid;
+    pm.updateProduct(param, res);
+});
+
 app.post('/api/product', function(req, res){
     var param = {};
     param.icon = req.body.icon;
