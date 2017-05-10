@@ -113,14 +113,22 @@
 						<c:Item text="sap-icon://pharmacy" key="sap-icon://pharmacy"/>
 						<c:Item text="sap-icon://sap-ui5" key="sap-icon://sap-ui5"/>
 					</ComboBox>
-				</l:HorizontalLayout>																						
-				<!--Image
-					src= "{
-							path : 'PictureUrl',
-							formatter : '.formatter.pictureUrl'
-						}"
+				</l:HorizontalLayout>	
+				<u:FileUploader
+					id="fileUploader"
+					name="myFileUpload"
+					uploadUrl="upload/"
+					width="400px"
+					tooltip="Upload your product picture to the server"
+					uploadComplete="handleUploadComplete" class="sapUiSmallMargin"/>
+				<Button
+					text="Upload File"
+					press="handleUploadPress" class="sapUiSmallMargin"/>
+				<Image
+					id="image"
+					width="300px"
 					decorative="true"
-					densityAware="false" / -->
+					densityAware="false" />
 			</l:VerticalLayout>
 		</content>
 	</Page>

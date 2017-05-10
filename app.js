@@ -2,6 +2,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var pm = require('./processor/ProductManager.js');
 var app = express();
+var path = require('path');
+var formidable = require('formidable');
+var fs = require('fs');
+var mime = require('mime');
 
 app.set('port', process.env.PORT || 8088);
 
@@ -17,26 +21,40 @@ app.get('/', function (req, res) {
     res.redirect(303, 'index.html');
 });
 
+app.get('/uploads/:name', function(req, res){
+  var name = req.params.name;
+  var file = __dirname + '/uploads/' + name;
+
+  var filename = path.basename(file);
+  var mimetype = mime.lookup(file);
+
+  res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+  res.setHeader('Content-type', mimetype);
+
+  var filestream = fs.createReadStream(file);
+  filestream.pipe(res);
+});
+
 app.get('/api/products', function (req, res) {
     pm.setApp(app);
     pm.getProducts(res);
 });
 
-app.get('/api/product/:pid', function(req, res){
+app.get('/api/product/:pid', function (req, res) {
     var pid = req.params.pid;
     // var data = pm.getProduct(pid, res);
     // res.json(data);
     pm.getProduct(pid, res);
 });
 
-app.delete('/api/product/:pid', function(req, res){
+app.delete('/api/product/:pid', function (req, res) {
     var pid = req.params.pid;
     // var data = pm.getProduct(pid);
     pm.delProduct(pid, res);
     // res.json(data);
 });
 
-app.post('/api/product/:pid', function(req, res){
+app.post('/api/product/:pid', function (req, res) {
     var param = {};
     param.icon = req.body.icon;
     param.number = req.body.number;
@@ -45,10 +63,11 @@ app.post('/api/product/:pid', function(req, res){
     param.info = req.body.info;
     param.infoState = req.body.infoState;
     param.pid = req.body.pid;
+    param.pictureUpdated = req.body.pictureUpdated;
     pm.updateProduct(param, res);
 });
 
-app.post('/api/product', function(req, res){
+app.post('/api/product', function (req, res) {
     var param = {};
     param.icon = req.body.icon;
     param.number = req.body.number;
@@ -65,6 +84,45 @@ app.post('/api/product', function(req, res){
 app.get('/about', function (req, res) {
     res.type('text/plain');
     res.send('My name is Kun');
+});
+
+app.post('/upload/:pid', function (req, res) {
+
+    var pid = req.params.pid;
+    var filename = "";
+    console.log("item id is: " + pid)
+
+    // create an incoming form object
+    var form = new formidable.IncomingForm();
+
+    // specify that we want to allow the user to upload multiple files in a single request
+    form.multiples = true;
+
+    // store all uploads in the /uploads directory
+    form.uploadDir = path.join(__dirname, '/uploads');
+
+    // every time a file has been uploaded successfully,
+    // rename it to it's orignal name
+    form.on('file', function (field, file) {
+        fs.rename(file.path, path.join(form.uploadDir, file.name));
+        filename = file.name;
+        console.log(filename);
+    });
+
+    // log any errors that occur
+    form.on('error', function (err) {
+        console.log('An error has occured: \n' + err);
+    });
+
+    // once all the files have been uploaded, send a response to the client
+    form.on('end', function () {
+        // res.send("200:ok");
+        pm.updateTempPictureUrl(pid, filename, res);
+    });
+
+    // parse the incoming request containing the form data
+    form.parse(req);
+
 });
 
 //定制404页面

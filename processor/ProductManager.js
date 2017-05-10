@@ -147,7 +147,6 @@ exports.updateProduct = function (param, res) {
         default:
             throw new Error('Unknown execution environment: ' + myApp.get('env'));
     }
-                console.log("xxx: " + param.pid);
     Product.findById(param.pid, function(err, product){
         if(err){
             //todo: error handling
@@ -158,6 +157,7 @@ exports.updateProduct = function (param, res) {
             product.number = param.number;
             product.numberUnit = param.numberUnit;
             product.infoState = param.infoState;
+            product.pictureUrl = product.newPictureUrl;
             product.save(function(err, updatedProduct){
                 mongoose.connection.close();
                 console.log(product.pid + " updated.");
@@ -240,7 +240,8 @@ exports.getProduct = function (pid, res) {
             Unit: product.numberUnit,
             info: product.info,
             status: s,
-            PictureUrl: "pic1.jpg",
+            pictureUrl: product.pictureUrl,
+            newPictureUrl: product.newPictureUrl,
             title: product.title,
             icon: product.icon,
         }
@@ -268,4 +269,31 @@ exports.delProduct = function (pid, res) {
         };
         res.json(response);
     });
-}
+};
+
+exports.updateTempPictureUrl = function(pid, url, res){
+    switch (myApp.get('env')) {
+        case 'development':
+            mongoose.connect("mongodb://localhost:27017/test", opts);
+            break;
+        case 'production':
+            mongoose.connect("mongodb://localhost:27017/test", opts);
+            break;
+        default:
+            throw new Error('Unknown execution environment: ' + myApp.get('env'));
+    }
+    Product.findById(pid, function(err, product){
+        if(err){
+            //todo: error handling
+        }else{
+            product.newPictureUrl = url;
+            product.save(function(err, updatedProduct){
+                mongoose.connection.close();
+                console.log(pid + " updated.");
+                res.send("200:ok");
+                // var obj = {message: "success", url: updatedProduct.newPictureUrl};
+                // res.json(obj);
+            });
+        }
+    });    
+};

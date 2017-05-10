@@ -28,7 +28,13 @@ sap.ui.define([
                     var oModel = new JSONModel();
                     oModel.setData(data);
                     oView.setModel(oModel); 
-                    oView.bindElement("/");                   
+                    oView.bindElement("/");  
+                    var image = that.getView().byId("image");
+                    if(data.pictureUrl){
+                        image.setSrc("uploads/" + data.pictureUrl);
+                    }else{
+                        image.setSrc("");
+                    }
                 }
             })            
         },
@@ -69,6 +75,7 @@ sap.ui.define([
                 info: this.properties.modelData.info,
                 infoState: state,
                 pid: this.properties.modelData.pid,
+                pictureUpdated: this.properties.modelData.pictureUpdated? true: false,
             };
             proxy.execute({
                 data: data,
@@ -84,6 +91,47 @@ sap.ui.define([
                 }
             });
         },
+
+        handleUploadPress: function(){
+			var oFileUploader = this.getView().byId("fileUploader");
+            oFileUploader.setUploadUrl("upload/" + this.properties.modelData.pid);
+			oFileUploader.upload();
+        },
+
+		handleUploadComplete: function(oEvent) {
+			var sResponse = oEvent.getParameter("response");
+            var that = this;
+			if (sResponse) {
+				var sMsg = "";
+                // var data = JSON.parse(sResponse);
+				// var m = /^\[(\d\d\d)\]:(.*)$/.exec(sResponse);
+                var m = /\d\d\d/.exec(sResponse);
+				if (m[0] == "200") {
+					sMsg = "Upload Success";
+					oEvent.getSource().setValue("");
+                    this.properties.modelData.pictureUpdated = true;
+                    var proxy = new xsoft.service.ServiceProxy("xsoft.service.getProduct", true);
+                    proxy.execute({
+                        param: {
+                            pid: that.properties.pid
+                        },
+                        succeeded: function(data){
+                            data = JSON.parse(data);
+                            var image = that.getView().byId("image");
+                            if(data.pictureUrl){
+                                image.setSrc("uploads/" + data.newPictureUrl);
+                            }else{
+                                image.setSrc("");
+                            }
+                        }
+                    });                   
+				} else {
+					sMsg =  "Upload Error";
+				}
+ 
+				MessageToast.show(sMsg);
+			}
+		},        
     });
     return ControllerController;
 });

@@ -7,7 +7,9 @@ var productSchema = mongoose.Schema({
     title: String,
     info: String,
     infoState: String,
-    pid: mongoose.Schema.Types.ObjectId
+    pid: mongoose.Schema.Types.ObjectId,
+    pictureUrl: String,
+    newPictureUrl: String,
 });
 
 productSchema.methods.getDisplayPrice = function(){
