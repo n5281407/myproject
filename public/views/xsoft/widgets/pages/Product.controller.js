@@ -118,7 +118,7 @@ sap.ui.define([
                         succeeded: function(data){
                             data = JSON.parse(data);
                             var image = that.getView().byId("image");
-                            if(data.pictureUrl){
+                            if(data.newPictureUrl){
                                 image.setSrc("uploads/" + data.newPictureUrl);
                             }else{
                                 image.setSrc("");
