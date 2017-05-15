@@ -128,7 +128,8 @@
 					id="image"
 					width="300px"
 					decorative="true"
-					densityAware="false" />
+					densityAware="false" 
+					class="sapUiSmallMargin"/>
 			</l:VerticalLayout>
 		</content>
 	</Page>
