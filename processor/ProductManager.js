@@ -179,6 +179,7 @@ exports.getProducts = function (res) {
             throw new Error('Unknown execution environment: ' + myApp.get('env'));
     }
     Product.find(function (err, products) {
+        var convertProducts = [];
         if (err) {
             console.error(err);
         } else {
