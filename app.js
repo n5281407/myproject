@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var pm = require('./processor/ProductManager.js');
+var dm = require('./processor/DocumentManager.js');
 var app = express();
 var path = require('path');
 var formidable = require('formidable');
@@ -79,6 +80,24 @@ app.post('/api/product', function (req, res) {
     res.json({
         state: "success"
     });
+});
+
+app.post('/api/document', function(req, res){
+    var param = {};
+    dm.setApp(app);
+    param.content = req.body.content;
+    dm.addDocument(param);
+    res.json({
+        state: "success"
+    })
+});
+
+app.get('/api/document/:uuid', function (req, res) {
+    var pid = req.params.uuid;
+    dm.setApp(app);
+    // var data = pm.getProduct(pid, res);
+    // res.json(data);
+    dm.getDocument(pid, res);
 });
 
 app.get('/about', function (req, res) {
