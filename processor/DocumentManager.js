@@ -75,7 +75,7 @@ exports.getDocument = function(uuid, res){
                         <title>Document Sharing</title>
                     </head>
                     <body>
-                        <p>${data.content}</p>
+                        <pre>${data.content}</pre>
                     </body>
                 </html>
             `;
