@@ -34,6 +34,7 @@ exports.addDocument = function(param, res){
     ).save(function(err, product){
         mongoose.connection.close();
         if(err){
+            console.error(err);
             throw new Error("internal error");
         }else{
             console.log("new document added, uuid: " + uuid);
