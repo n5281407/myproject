@@ -13,7 +13,7 @@ var myApp;
 exports.setApp = function (app){
     myApp = app;
 };
-exports.addDocument = function(param){
+exports.addDocument = function(param, res){
     var uuid = uuidv4();
     switch (myApp.get('env')) {
         case 'development':
