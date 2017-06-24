@@ -13,9 +13,10 @@ app.set('port', process.env.PORT || 8088);
 console.log("current enviroment is: " + app.get('env'));
 
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: true,
+    limit: '5mb'
 }));
 
 app.get('/', function (req, res) {
