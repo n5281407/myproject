@@ -37,6 +37,10 @@ exports.addDocument = function(param){
             throw new Error("internal error");
         }else{
             console.log("new document added, uuid: " + uuid);
+            res.json({
+                state: "success",
+                uuid: uuid
+            });        
         }
     })
 };

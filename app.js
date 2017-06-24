@@ -86,10 +86,7 @@ app.post('/api/document', function(req, res){
     var param = {};
     dm.setApp(app);
     param.content = req.body.content;
-    dm.addDocument(param);
-    res.json({
-        state: "success"
-    })
+    dm.addDocument(param, res);
 });
 
 app.get('/api/document/:uuid', function (req, res) {
